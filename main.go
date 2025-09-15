@@ -26,7 +26,7 @@ type application struct {
 //	@version		1.0.0
 //	@description	Swagger for test Task in effective Mobile
 
-//	@contact.name	API Support
+//	@contact.name	Oleg (API Author):
 //	@contact.url	https://github.com/BrikozO
 //	@contact.email	oleg.yakushev.work@gmail.com
 
