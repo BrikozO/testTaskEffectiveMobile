@@ -6,14 +6,6 @@ import (
 	"log/slog"
 )
 
-const (
-	Host     = "localhost"
-	Port     = 5432
-	User     = "testuser"
-	Password = "12345678"
-	Db       = "test_db"
-)
-
 func ConnectPostgres(connectionString string) (*sql.DB, func(), error) {
 	var err error
 	conn, err := sql.Open("postgres", connectionString)

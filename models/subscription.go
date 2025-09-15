@@ -12,6 +12,8 @@ import (
 
 var monthYearDateFormat = "01-2006"
 
+// MonthYearDate represents a date in MM-YYYY format
+// swagger:strfmt month-year
 type MonthYearDate struct {
 	time.Time
 }
@@ -62,9 +64,9 @@ func (m *MonthYearDate) Scan(value interface{}) error {
 }
 
 type Subscription struct {
-	ServiceName string         `json:"service_name"`
-	Price       int            `json:"price"`
-	UserId      uuid.UUID      `json:"user_id"`
-	StartDate   MonthYearDate  `json:"start_date"`
-	EndDate     *MonthYearDate `json:"end_date"`
+	ServiceName string         `json:"service_name" example:"Netflix"`
+	Price       int            `json:"price" example:"999"`
+	UserId      uuid.UUID      `json:"user_id" example:"550e8400-e29b-41d4-a716-446655440000"`
+	StartDate   MonthYearDate  `json:"start_date" example:"01-2024" swaggertype:"string" format:"MM-YYYY"`
+	EndDate     *MonthYearDate `json:"end_date" example:"12-2024" swaggertype:"string" format:"MM-YYYY"`
 }

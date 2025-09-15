@@ -1,6 +1,19 @@
 services:
+  web:
+    container_name: web
+    build: .
+    command: [ "./main" ]
+    restart: always
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - postgres_db
+
   postgres_db:
     image: postgres:latest
+    container_name: postgres_db
     volumes:
       - postgresql_data:/var/lib/postgresql/data
     restart: always

@@ -50,6 +50,16 @@ func (sr *SubscriptionsRepository) CalculateSum(calcDto dto.CalculationRequestDT
 }
 
 func (sr *SubscriptionsRepository) GetByUserID(userId uuid.UUID) ([]dto.SubscriptionDTO, error) {
+	existsStmt := `SELECT EXISTS(SELECT 1 FROM subscriptions WHERE user_id = $1)`
+	var userExists bool
+	err := sr.Db.QueryRow(existsStmt, userId).Scan(&userExists)
+	if err != nil {
+		return nil, err
+	}
+	if !userExists {
+		return nil, sql.ErrNoRows
+	}
+
 	stmt := `SELECT id, service_name, price, user_id, start_date, end_date
 			 FROM subscriptions
 			 WHERE user_id = $1`

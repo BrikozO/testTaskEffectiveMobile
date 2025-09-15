@@ -11,6 +11,8 @@ import (
 	"testTaskEffectiveMobile/postgres_db/repositories"
 	"time"
 
+	_ "testTaskEffectiveMobile/docs"
+
 	_ "github.com/lib/pq"
 )
 
@@ -20,13 +22,23 @@ type application struct {
 	logger        *slog.Logger
 }
 
+//	@title			Swagger API Documentation
+//	@version		1.0.0
+//	@description	Swagger for test Task in effective Mobile
+
+//	@contact.name	API Support
+//	@contact.url	https://github.com/BrikozO
+//	@contact.email	oleg.yakushev.work@gmail.com
+
+// @host		localhost:8080
+// @BasePath	/api/v1
 func main() {
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		postgres_db.Host,
-		postgres_db.Port,
-		postgres_db.User,
-		postgres_db.Password,
-		postgres_db.Db)
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("POSTGRES_HOST"),
+		os.Getenv("POSTGRES_PORT"),
+		os.Getenv("POSTGRES_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("POSTGRES_DB"))
 	db, closer, err := postgres_db.ConnectPostgres(psqlInfo)
 	if err != nil {
 		log.Fatal(err)
