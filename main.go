@@ -27,11 +27,11 @@ func main() {
 		postgres_db.User,
 		postgres_db.Password,
 		postgres_db.Db)
-	db, err := postgres_db.ConnectPostgres(psqlInfo)
+	db, closer, err := postgres_db.ConnectPostgres(psqlInfo)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	defer closer()
 
 	app := &application{subscriptions: &repositories.SubscriptionsRepository{Db: db},
 		logger: slog.New(slog.NewTextHandler(os.Stdout, nil))}
