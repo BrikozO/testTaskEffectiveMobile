@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"testTaskEffectiveMobile/postgres_db"
+	v1 "testTaskEffectiveMobile/postgres_db/migrations/v1"
 	"testTaskEffectiveMobile/postgres_db/repositories"
 	"time"
 
@@ -44,6 +45,13 @@ func main() {
 		log.Fatal(err)
 	}
 	defer closer()
+
+	// Simple migrations
+	subscriptionMigration := v1.SubscriptionMigration{Db: db}
+	err = subscriptionMigration.Init()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	app := &application{subscriptions: &repositories.SubscriptionsRepository{Db: db},
 		logger: slog.New(slog.NewTextHandler(os.Stdout, nil))}
